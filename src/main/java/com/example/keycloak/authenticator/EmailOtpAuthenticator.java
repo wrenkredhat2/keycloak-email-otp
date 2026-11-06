@@ -27,7 +27,7 @@ public class EmailOtpAuthenticator implements Authenticator {
     }
 
     @Override
-    public void authenticate(AuthenticationFlowContext context) {
+public void authenticate(AuthenticationFlowContext context) {
         UserModel user = context.getUser();
         
         // Sicherstellen, dass der User existiert und eine E-Mail hat
@@ -44,16 +44,17 @@ public class EmailOtpAuthenticator implements Authenticator {
         context.getAuthenticationSession().setAuthNote(AUTH_TTL_KEY, ttl);
         
         try {
-            KeycloakSession session = context.getSession();
+            KeycloakSession kcsession = context.getSession();
             RealmModel realm = context.getRealm();
 
             // Attribute für das FreeMarker Template vorbereiten
             Map<String, Object> attributes = new HashMap<>();
             attributes.put("user", user);
             attributes.put("code", code);
+            attributes.put("realmname", realm.getName());
 
             // Den EmailTemplateProvider aus der Session holen
-            EmailTemplateProvider emailTemplateProvider = session.getProvider(EmailTemplateProvider.class);
+            EmailTemplateProvider emailTemplateProvider = kcsession.getProvider(EmailTemplateProvider.class);
             
             // Kontext für das Template setzen
             emailTemplateProvider.setRealm(realm);
@@ -79,6 +80,7 @@ public class EmailOtpAuthenticator implements Authenticator {
         Response challenge = context.form().createForm("email-otp-form.ftl");
         context.challenge(challenge);
     }
+
 
 @Override
     public void action(AuthenticationFlowContext context) {

@@ -1,4 +1,4 @@
-Hallo ${user.firstName!user.username},
+Hallo ${user.firstName!user.username}, realm ${realmname},
 
 Dein one-time verification code ist: ${code}
 
