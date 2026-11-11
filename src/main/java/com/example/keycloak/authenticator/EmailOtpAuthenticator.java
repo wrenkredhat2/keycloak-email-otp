@@ -51,9 +51,9 @@ public void authenticate(AuthenticationFlowContext context) {
             Map<String, Object> attributes = new HashMap<>();
             attributes.put("user", user);
             attributes.put("code", code);
-            attributes.put("realmname", realm.getName());
+            attributes.put("realmname", realm.getDisplayName());
 
-            // Den EmailTemplateProvider aus der Session holen
+              // Den EmailTemplateProvider aus der Session holen
             EmailTemplateProvider emailTemplateProvider = kcsession.getProvider(EmailTemplateProvider.class);
             
             // Kontext für das Template setzen
